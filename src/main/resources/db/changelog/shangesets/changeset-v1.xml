@@ -1,0 +1,52 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+<changeSet id="1.0.0" author="nvoxland">
+        <sql>
+            CREATE TABLE users
+            (
+                id         uuid primary key,
+                first_name varchar(128) NOT NULL,
+                last_name  varchar(128) NOT NULL,
+                email      varchar(128) NOT NULL,
+                password   varchar(255) NOT NULL,
+                created    timestamp    not null,
+                update     timestamp    not null,
+                status     varchar(64) default 'ACTIVE'
+            )
+        </sql>
+    </changeSet>
+    <changeSet id="1.0.1" author="nvoxland">
+        <sql>
+            CREATE TABLE roles
+            (
+                id      uuid primary key,
+                name    varchar(128) NOT NULL,
+                created timestamp,
+                update  timestamp,
+                status  varchar(64) default 'ACTIVE'
+            )
+        </sql>
+    </changeSet>
+    <changeSet id="1.0.2" author="nvoxland">
+        <sql>
+            CREATE TABLE user_roles
+            (
+                user_id uuid not null references users (id),
+                role_id uuid not null references roles (id)
+            )
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="nvoxland">
+        <sql>
+            INSERT INTO roles (id, name)
+            VALUES ('c352072f-c8c7-476b-abe8-1569a3c91e7f', 'ROLE_USER'),
+                   ('4779e27f-037d-4126-bfa6-13af91dd9b1f', 'ROLE_ADMIN')
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: postgres
+    driver-class-name: org.postgresql.Driver
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+  liquibase:
+    change-log: db/changelog/changelog-master.xml
+    url: jdbc:postgresql://localhost:5432/postgres
+    user: postgres
+    password: postgres
+
+jwt:
+  token:
+    secret: myapp
+    expired: 3600000
